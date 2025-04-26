@@ -1,0 +1,45 @@
+/* Reset all existing pagination styles */
+.swiper-pagination {
+  position: static !important;
+  width: 100% !important;
+  margin: 20px 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Fix bullet size */
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important;
+  margin: 0 6px !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* Active bullet */
+.swiper-pagination-bullet-active {
+  background: #ffffff !important;
+  transform: scale(1.5) !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Fix for dynamic bullets container */
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  position: relative !important;
+  transform: none !important;
+}
+
+/* Disable dynamic sizing for adjacent bullets to maintain consistency */
+.swiper-pagination-bullet-active-prev,
+.swiper-pagination-bullet-active-next,
+.swiper-pagination-bullet-active-prev-prev,
+.swiper-pagination-bullet-active-next-next {
+  transform: none !important;
+}
