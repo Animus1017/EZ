@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -7,7 +7,9 @@ import "swiper/css/pagination";
 import "./Carousel3D.css";
 import { offeringSlider } from "../../../data/OfferingSlider";
 
-const Carousel3D = () => {
+const Carousel3D = ({ onActiveSlideChange }) => {
+  const [activeSlideIndex, setActiveSlideIndex] = useState(1);
+
   return (
     <div className="relative w-full h-full flex flex-col items-center">
       <div className="w-full">
@@ -48,6 +50,14 @@ const Carousel3D = () => {
           shortSwipes={true}
           resistance={true}
           resistanceRatio={0.85}
+          onSlideChange={(swiper) => {
+            // Get the real index considering the loop
+            const realIndex = swiper.realIndex;
+            setActiveSlideIndex(realIndex);
+            if (onActiveSlideChange) {
+              onActiveSlideChange(realIndex);
+            }
+          }}
         >
           {offeringSlider.map((item, index) => (
             <SwiperSlide key={item.id} className="transition-all duration-300">
