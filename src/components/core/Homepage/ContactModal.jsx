@@ -100,19 +100,44 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
   }, [reset, isSubmitSuccessful]);
 
   return (
-    <div className="fixed inset-0 bg-white/10 flex items-center justify-center backdrop-blur-sm z-[1000] overflow-y-auto w-screen h-screen py-4 sm:py-6 md:py-8 lg:py-10">
-      <div className="rounded-2xl overflow-hidden w-3/5 my-auto flex">
-        {/* left side of form */}
-        <div className="bg-gradient-hero p-4 w-[45%]">
-          <div className="text-white p-5 flex flex-col gap-3">
-            <h2 className="text-[32px] font-bold">Send us a brief</h2>
-            <p className="text-2xl font-medium">
+    <div className="fixed inset-0 bg-white/10 flex items-center justify-center backdrop-blur-sm z-[1000] overflow-y-auto w-screen h-screen py-4 sm:py-6 md:py-8 lg:py-10 px-4">
+      <div className="rounded-2xl overflow-hidden w-full max-w-5xl my-auto flex flex-col md:flex-row">
+        {/* left side of form - regular display on md+ screens */}
+        <div className="bg-gradient-hero p-4 w-full md:w-[45%] hidden md:block">
+          <div className="text-white p-3 md:p-5 flex flex-col gap-3">
+            <h2 className="text-2xl md:text-[32px] font-bold">
+              Send us a brief
+            </h2>
+            <p className="text-lg md:text-2xl font-medium">
               Our team will get in touch with you within 10 Minutes!
             </p>
           </div>
-          <img src={modalBg} alt="svg" />
+          <img src={modalBg} alt="svg" className="w-full" />
         </div>
-        <div className="bg-white w-[55%] py-10 px-8 relative">
+
+        {/* mobile version of left side - only visible on small screens */}
+        <div className="bg-gradient-hero w-full md:hidden min-h-[150px] relative">
+          {/* Solid background layer */}
+          <div className="absolute inset-0 bg-gradient-hero"></div>
+
+          {/* Background image on top of solid color */}
+          <div
+            className="absolute inset-0 bg-center bg-cover bg-no-repeat bg-contain mix-blend-soft-light"
+            style={{
+              backgroundImage: `url(${modalBg})`,
+            }}
+          ></div>
+
+          {/* Content */}
+          <div className="text-white p-4 flex flex-col gap-2 relative z-10">
+            <h2 className="text-2xl font-bold">Send us a brief</h2>
+            <p className="text-sm font-medium">
+              Our team will get in touch with you within 10 Minutes!
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white w-full md:w-[55%] py-6 md:py-10 px-5 md:px-8 relative">
           {/* cross button */}
           <button
             disabled={loading}
@@ -121,6 +146,7 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
           >
             <RxCross2 className="text-black hover:text-white transition-all duration-200 text-2xl" />
           </button>
+
           {/* form-right side */}
           <form
             className="flex flex-col gap-4"
@@ -129,7 +155,7 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
             {/* name input */}
             <input
               type="text"
-              className="text-lg border border-borderGrey p-3 rounded-lg w-full outline-none focus:border-dullGrey transition-all duration-150"
+              className="text-base md:text-lg border border-borderGrey p-3 rounded-lg w-full outline-none focus:border-dullGrey transition-all duration-150"
               placeholder="Name"
               {...register("name", { required: true })}
             />
@@ -194,7 +220,7 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
               </div>
               <input
                 type="tel"
-                className="w-[80%] flex-grow text-lg p-3 border border-borderGrey rounded-r-lg focus:outline-none"
+                className="w-[80%] flex-grow text-base md:text-lg p-3 border border-borderGrey rounded-r-lg focus:outline-none"
                 placeholder="Mobile Number"
                 {...register("phone_no", {
                   required: "Mobile Number is required",
@@ -215,7 +241,7 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
             {/* email input */}
             <input
               type="email"
-              className="text-lg border border-borderGrey p-3 rounded-lg w-full outline-none focus:border-dullGrey transition-all duration-150"
+              className="text-base md:text-lg border border-borderGrey p-3 rounded-lg w-full outline-none focus:border-dullGrey transition-all duration-150"
               placeholder="Email"
               {...register("email", { required: true })}
             />
@@ -227,7 +253,7 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
 
             <div className="relative" ref={servicesDropdownRef}>
               <div
-                className="text-lg border border-borderGrey p-3 rounded-lg w-full cursor-pointer bg-white flex justify-between items-center"
+                className="text-base md:text-lg border border-borderGrey p-3 rounded-lg w-full cursor-pointer bg-white flex justify-between items-center"
                 onClick={() => setShowServicesDropdown(!showServicesDropdown)}
               >
                 <span className="text-gray-400">
@@ -279,7 +305,7 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
                   {selectedServices.map((service, index) => (
                     <div
                       key={index}
-                      className="text-lg text-darkBlue border border-darkBlue px-2 py-[3px] rounded-3xl flex items-center gap-1"
+                      className="text-base md:text-lg text-darkBlue border border-darkBlue px-2 py-[3px] rounded-3xl flex items-center gap-1"
                     >
                       {service}
                       <button
@@ -302,7 +328,7 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
             {/* message textarea */}
             <textarea
               rows={3}
-              className="text-lg border border-borderGrey p-3 rounded-lg w-full outline-none focus:border-dullGrey transition-all duration-150"
+              className="text-base md:text-lg border border-borderGrey p-3 rounded-lg w-full outline-none focus:border-dullGrey transition-all duration-150"
               placeholder="Message"
               {...register("message")}
             />
@@ -314,14 +340,17 @@ const ContactModal = ({ setContactModal, initialSelectedService }) => {
                 className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 {...register("promotion")}
               />
-              <label htmlFor="promotion" className="text-gray-700">
+              <label
+                htmlFor="promotion"
+                className="text-gray-700 text-sm md:text-base"
+              >
                 I would like to receive promotional emails
               </label>
             </div>
 
             <button
               type="submit"
-              className="text-white px-6 py-4 rounded-md bg-orange"
+              className="text-white px-4 py-3 md:px-6 md:py-4 rounded-md bg-orange text-sm md:text-base"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit"}

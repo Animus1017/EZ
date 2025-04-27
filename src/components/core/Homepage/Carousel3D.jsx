@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -9,6 +9,31 @@ import { offeringSlider } from "../../../data/OfferingSlider";
 
 const Carousel3D = ({ onActiveSlideChange }) => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(1);
+  const [slidesPerView, setSlidesPerView] = useState(3);
+
+  // Update slides per view based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setSlidesPerView(1);
+      } else if (window.innerWidth < 1024) {
+        setSlidesPerView(2);
+      } else {
+        setSlidesPerView(3);
+      }
+    };
+
+    // Initial call
+    handleResize();
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Clean up
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className="relative w-full h-full flex flex-col items-center">
@@ -21,12 +46,12 @@ const Carousel3D = ({ onActiveSlideChange }) => {
           }}
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView={3}
-          spaceBetween={-50}
+          slidesPerView={slidesPerView}
+          spaceBetween={slidesPerView === 1 ? 0 : -50}
           coverflowEffect={{
             rotate: 0,
-            stretch: 50,
-            depth: 250,
+            stretch: slidesPerView === 1 ? 20 : 50,
+            depth: slidesPerView === 1 ? 100 : 250,
             modifier: 1.5,
             slideShadows: false,
           }}
@@ -63,7 +88,7 @@ const Carousel3D = ({ onActiveSlideChange }) => {
             <SwiperSlide key={item.id} className="transition-all duration-300">
               {({ isActive, isPrev, isNext }) => (
                 <div
-                  className={`flex flex-col gap-5 text-white items-center w-[500px] transition-all duration-500 ${
+                  className={`flex flex-col gap-3 md:gap-5 text-white items-center w-full md:w-[400px] lg:w-[500px] transition-all duration-500 ${
                     isActive
                       ? "opacity-100 scale-100"
                       : isPrev || isNext
@@ -73,10 +98,10 @@ const Carousel3D = ({ onActiveSlideChange }) => {
                 >
                   {/* Title with dynamic alignment */}
                   <h4
-                    className={`text-xl uppercase transition-all duration-300 w-full
+                    className={`text-lg md:text-xl uppercase transition-all duration-300 w-full
                       ${
                         isActive
-                          ? "text-center opacity-100 text-[32px]"
+                          ? "text-center opacity-100 text-xl md:text-2xl lg:text-[32px]"
                           : isPrev
                           ? "text-left opacity-40"
                           : "text-right opacity-40"
@@ -86,22 +111,22 @@ const Carousel3D = ({ onActiveSlideChange }) => {
                   </h4>
 
                   <p
-                    className={`transition-opacity duration-300 w-full text-center
+                    className={`transition-opacity duration-300 w-full text-center text-sm md:text-base
                     ${isActive ? "opacity-100 " : "opacity-0"}`}
                   >
                     {item.description}
                   </p>
 
                   <div
-                    className={`mx-auto w-[500px] aspect-square rounded-lg border flex flex-col 
-                    bg-gradient-to-r from-[#202020] via-[#3b3a3a] to-[#050505] p-4 border-white 
+                    className={`mx-auto w-full md:w-[400px] lg:w-[500px] aspect-square rounded-lg border flex flex-col 
+                    bg-gradient-to-r from-[#202020] via-[#3b3a3a] to-[#050505] p-2 md:p-4 border-white 
                     overflow-hidden transition-all duration-300 
                     ${isActive ? "opacity-100" : "opacity-40"}`}
                   >
                     <div className="flex">
-                      <div className="flex flex-col gap-3 flex-grow">
+                      <div className="flex flex-col gap-2 md:gap-3 flex-grow">
                         <h3
-                          className={`text-white text-2xl
+                          className={`text-white text-lg md:text-xl lg:text-2xl
                             ${
                               isActive
                                 ? "text-center"
@@ -126,22 +151,24 @@ const Carousel3D = ({ onActiveSlideChange }) => {
                       <img
                         src={item.card.icon}
                         alt={item.title}
-                        className="w-10"
+                        className="w-6 md:w-8 lg:w-10"
                       />
                     </div>
-                    <div className="flex-grow flex items-center px-2">
-                      <div className="flex flex-wrap gap-8 justify-center">
+                    <div className="flex-grow flex items-center px-1 md:px-2">
+                      <div className="flex flex-wrap gap-4 md:gap-6 lg:gap-8 justify-center">
                         {item.card.content.map((c) => (
                           <div
-                            className="flex flex-col gap-3 justify-center items-center"
+                            className="flex flex-col gap-2 md:gap-3 justify-center items-center"
                             key={c.id}
                           >
                             <img
                               src={c.icon}
                               alt={c.title}
-                              className="w-14 aspect-square"
+                              className="w-8 md:w-10 lg:w-14 aspect-square"
                             />
-                            <span className="text-center">{c.title}</span>
+                            <span className="text-center text-xs md:text-sm lg:text-base">
+                              {c.title}
+                            </span>
                           </div>
                         ))}
                       </div>
