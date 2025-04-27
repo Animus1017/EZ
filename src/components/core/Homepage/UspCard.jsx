@@ -40,12 +40,9 @@ const UspCard = ({ title, icon, description }) => {
               </h4>
               <p className="text-richblack-25 text-sm">{description}</p>
             </div>
-            <Link
-              to={linkPath}
-              className="text-sm lg:text-xs xl:text-sm text-white underline text-left transition-opacity duration-500 opacity-0 group-hover:opacity-100 group-focus:opacity-100 delay-150"
-            >
+            <p className="cursor-pointer text-sm lg:text-xs xl:text-sm text-white underline text-left transition-opacity duration-500 opacity-0 group-hover:opacity-100 group-focus:opacity-100 delay-150">
               Read More
-            </Link>
+            </p>
           </div>
         </div>
       </Link>

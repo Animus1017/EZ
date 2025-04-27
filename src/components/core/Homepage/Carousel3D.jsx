@@ -65,7 +65,6 @@ const Carousel3D = ({ onActiveSlideChange }) => {
           className="mySwiper"
           speed={800}
           loop={true}
-          loopFillGroupWithBlank={true}
           loopAdditionalSlides={2}
           watchSlidesProgress={true}
           slideToClickedSlide={true}
