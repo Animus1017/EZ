@@ -6,7 +6,7 @@ const Offerings = () => {
   const [contactModal, setContactModal] = useState(false);
   return (
     <div className=" bg-gradient-hero">
-      <div className="max-w-maxContent mx-auto p-10 flex flex-col gap-4">
+      <div className="max-w-maxContent w-11/12 mx-auto p-10 flex flex-col gap-4">
         <div className="flex flex-col gap-8">
           <h2 className="font-medium text-[32px] text-white text-center">
             70+ Offerings that allow you to Focus on your core tasks

@@ -15,8 +15,8 @@ export default {
       },
       colors: {
         richblack: {
-          900: "#0A0A0A",
-          200: "#E5E5E5",
+          5: "#d1d4d9",
+          25: "#b4b4b4",
         },
         // Custom colors
         darkestBlue: "#091627",
@@ -28,6 +28,7 @@ export default {
         lightOrange: "#e98742",
         lightGrey: "#bdbdbd",
         darkGrey: "#8a8888",
+        borderBlue: "#03080f",
         backgroundBlue: "#ebf2f5",
         article: "#3d3d3d",
         dullGrey: "#8b8a8a",

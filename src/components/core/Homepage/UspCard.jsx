@@ -1,33 +1,52 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import commonIcons from "../../../assets/uspIcons/common.svg";
 
-const UspCard = ({ title, icon, link, description }) => {
+const UspCard = ({ title, icon, description }) => {
+  const linkPath = title.toLowerCase().split(" ").join("-");
+
   return (
-    <div className="perspective w-full h-[180px]">
-      <a
-        href={link}
-        className="relative w-full h-full block group focus:outline-none"
+    <div className="perspective h-60 w-full my-auto relative">
+      <img
+        src={icon}
+        className="absolute -top-[17%] left-1/2 -translate-x-2/4 z-0 scale-150"
+      />
+      <Link
+        to={linkPath}
+        className="relative group focus:outline-none z-10"
         tabIndex={0}
       >
         <div className="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus:[transform:rotateY(180deg)]">
-          {/* Front */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a2f] to-[#1a2a4f] text-white rounded-xl p-8 pt-10 shadow-lg flex flex-col items-start [backface-visibility:hidden]">
-            <div className="text-3xl mb-4">{icon}</div>
-            <div className="text-lg font-semibold mb-2">{title}</div>
-            <div className="absolute top-4 right-4 text-xl opacity-70">↗</div>
+          {/* before flip */}
+          <div className="absolute inset-0 bg-gradient-hero w-full h-full text-white rounded-xl p-4 [backface-visibility:hidden] flex flex-col justify-between">
+            <div className="flex justify-between items-start transition-opacity duration-500 group-hover:opacity-0 group-focus:opacity-0">
+              <img src={icon} alt={title} className="" />
+              <img
+                src={commonIcons}
+                alt="common"
+                className="filter brightness-0 invert w-8 aspect-square"
+              />
+            </div>
+            <div className="w-2/3 text-center mx-auto text-2xl font-medium transition-opacity duration-500 group-hover:opacity-0 group-focus:opacity-0">
+              {title}
+            </div>
           </div>
-          {/* Back */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1a2a4f] to-[#0a1a2f] text-white rounded-xl p-6 pt-8 shadow-lg flex flex-col justify-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
-            <div className="text-lg font-semibold mb-2 text-left">{title}</div>
-            <div className="text-sm text-left mb-4">{description}</div>
-            <a
-              href={link}
-              className="text-white font-bold underline text-left hover:text-blue-300"
+
+          {/* after flip */}
+          <div className="absolute inset-0 bg-gradient-hero w-full h-full text-white rounded-xl p-4 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-between">
+            <div className="flex flex-col gap-3 transition-opacity duration-500 opacity-0 group-hover:opacity-100 group-focus:opacity-100 delay-150">
+              <h4 className="text-center text-xl font-medium">{title}</h4>
+              <p className="text-richblack-25">{description}</p>
+            </div>
+            <Link
+              to={linkPath}
+              className="text-sm text-white underline text-left transition-opacity duration-500 opacity-0 group-hover:opacity-100 group-focus:opacity-100 delay-150"
             >
               Read More
-            </a>
+            </Link>
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 };
